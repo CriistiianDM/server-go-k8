@@ -20,6 +20,7 @@ func main() {
 	mux.HandleFunc("/hello", getHello)
 	mux.HandleFunc("/healthz", healhzStatus)
 	mux.HandleFunc("/404", notFound)
+	mux.HandleFunc("/", healhzStatus)
 
 	// Middleware CORS applied only to the mux
 	http.Handle("/", enableCORS(mux))
