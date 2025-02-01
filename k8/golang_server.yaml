@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: container-server
-          image: erksoftware/server:1.1
+          image: erksoftware/server:1.2
           ports:
             - containerPort: 4000
           readinessProbe:

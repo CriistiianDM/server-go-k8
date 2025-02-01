@@ -13,12 +13,16 @@ var PORT int = 4000
 
 // Main
 func main() {
-	// Def Routes
-	http.HandleFunc("/hello", getHello)
-	http.HandleFunc("/healthz", healhzStatus)
+	// Create a new ServeMux for routing
+	mux := http.NewServeMux()
 
-	// Middleware CORS
-	http.Handle("/", enableCORS(http.DefaultServeMux))
+	// Def Routes
+	mux.HandleFunc("/hello", getHello)
+	mux.HandleFunc("/healthz", healhzStatus)
+	mux.HandleFunc("/404", notFound)
+
+	// Middleware CORS applied only to the mux
+	http.Handle("/", enableCORS(mux))
 
 	fmt.Printf("Starting server on port %d...\n", PORT)
 	err := http.ListenAndServe(fmt.Sprintf(":%d", PORT), nil)
@@ -63,4 +67,13 @@ func healhzStatus(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "text/plain")
     w.WriteHeader(http.StatusOK)
     io.WriteString(w, "Ok\n")
+}
+
+/**
+  * Handler for undefined routes
+*/
+func notFound(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "text/plain")
+    w.WriteHeader(http.StatusOK)
+    io.WriteString(w, "404 Not Found\n")
 }
