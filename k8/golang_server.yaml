@@ -10,7 +10,6 @@ metadata:
   labels:
     app: go-server
 spec:
-  restartPolicy: Always 
   replicas: 1
   selector:
     matchLabels:
